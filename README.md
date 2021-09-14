@@ -1,13 +1,16 @@
+# Multidisciplinary Project
+* This is a multidisciplinary project carried out by a team of 5. The ECG data and patient information gathered from several European hospitals are provided. Our task is to improve the diagnose precision of atrial fibrillation.
+* In this project, considering the lack of data and the data isolation of hospitals, we creatively used a second-layer stacking model, which is not only adaptive to the current existent models of some hospitals but also improved the prediction accuracy. The stacking model takes the outputs of the first-layer models as the input of the second-layer model. Our team used classifiers such as AdaBoost and RandomForest in the first layer, and logistic regression in the second layer. Patient data will be evaluated by its integrated model, then the result will be returned to the requested hospital as a reference for the doctor, and the final diagnoses made by a doctor will be inserted in the dataset for daily stack model training.
+* I took charge of data cleaning and model building. The dataset is severely non-uniformed in units and unbalanced on gender and age. I used MICE impute and SMOTE over-sampling method for missing value handling.
+
 # Note
 
-The original repository is created in 2018, because it has been set as private, so I copyed the whole project code in my own github account for repsresentation use.
-The work I have done includes data cleaning and model building.
-The data cleaning codes are in the source/,
-The
+* The original repository was created in 2018 . Because it had been set as private, I copied the whole project code in my own Github account for representation use.
+* The work I have done includes data cleaning and model building.
+* All the data preparations are in [source/](https://github.com/hades208002/mdp-project/tree/master/source),which includes many experiments tried to clean data with different impute and sampling models. The summary code is in [source/main.ipynb](https://github.com/hades208002/mdp-project/blob/master/source/main.ipynb).
+* We assume that a presentation with 3 independent hospitals will be shown, so three local hospital models are trained.
+* Our diagnose system is in [client_server_test/](https://github.com/hades208002/mdp-project/tree/master/client_server_test),see [client_server_test/how to use](https://github.com/hades208002/mdp-project/blob/master/client_server_test/how%20to%20use) to know how to implement this system.
 
-# Multidisciplinary Project
-
-Something magical will appear below.
 
 ## Python Environment 
 
@@ -78,5 +81,3 @@ source deactivate mdp
 
 - [Github Guide](https://guides.github.com)
 - [Dropbox Folder shared by Daiele Loiacono](https://www.dropbox.com/l/scl/AAD0auRNoQTeoxAvNlNIBGlW_fiGsavO2Zk)
-
-
