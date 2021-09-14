@@ -1,3 +1,10 @@
+# Note
+
+The original repository is created in 2018, because it has been set as private, so I copyed the whole project code in my own github account for repsresentation use.
+The work I have done includes data cleaning and model building.
+The data cleaning codes are in the source/,
+The
+
 # Multidisciplinary Project
 
 Something magical will appear below.
