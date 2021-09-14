@@ -1,0 +1,76 @@
+# HOW to use 
+
+go to Client_server_test INHERIT folder
+1)
+-> open the server notebook and run the first 3 lines
+2)
+-> launch the GUI_2.py (as many times as you want)
+-> load a dataframe (csv) from the folder Client_server_test INHERIT/data, named hospital..
+-> follow the instruction of the gui
+-> after the connection is initialized you can open the APP_3
+3)
+-> launch the APP_3.py (as many times as you want)
+-> click on the import botton and select a file (csv) from the Client_server_test INHERIT/data folder (not named hospital)
+-> click on predict and wait for the results
+-> click the send data button to send the corrected result back to the central model for future training
+
+// at the beginning the central model (the server) just perform majority voting
+if you want to trigger the training at the central model open the client notebook and run the lines ->
+loca.sendDataForCentralTraining(data =d_small )
+loca.sendData(data = pd.DataFrame(), label = "trigger test")
+
+
+as a tip.. it is better to wait the responce of a request to the server before sending another
+
+
+
+
+
+
+
+
+
+
+
+
+----------------------------------------------------------------------
+from the client notebook
+
+2) ## GUI
+- prepare dataset
+- create self.loca = LocalModelCommunication(data = <DATASET>)
+- crossValidationResult = self.loca.chooseModel_with_crossValidation_and_train() // get a dataframe with (name of the model, accuracy, standard deviation), or a "no data" if there is no training dataset
+- self.loca.connectToCentral() // return false if cannot connect
+
+
+3) ## APP
+- create self.loca = LocalModelCommunication(caller = <caller object (the APP self)> )
+- self.loca.connectToCentral() // return false if cannot connect
+- prediction request self.loca.requestPrediction(<DATA without AFclass>) -> check the predictionResultsReceived function in the localModelCommunication file -> at the end of predictionResultsReceived you can call the function of the "caller (APP)"
+- send data for central training self.sendDataForCentralTraining(<DATA with AFclass>) -> check sendNextChunkOfTrainingData function in LocalModelCommunication file -> -> at the end of sendNextChunkOfTrainingData you can call the function of the "caller (APP)"
+
+
+
+
+
+#How to use old
+1) run the central model : 
+- from CentralModelCommunication import CentralModelCommunication
+- a = CentralModelCommunication()
+
+2) create local model :
+- loca = LocalModelCommunication(data = <DATAFRAME COMPLETE>)
+
+3) predict data :
+- loca.requestPrediction(<DATAFRAME WITHOUT TARGET>)
+
+4) to send data to the central model :
+- loca.sendDataForCentralTraining(<DATAFRAME COMPLETE>)
+
+5) to trigger the training process (central model):
+- loca.sendData(pd.DataFrame(), "trigger test")
+
+# TIPS
+### - steps 2,3,4,5 can be performed by anylocal model created
+### - wait the response before sending other requests 
+### - to wait the result (and trigger some other functions) -> modify the  predictionResultsReceived function of the LocalModelCommunication

@@ -1,0 +1,40 @@
+Notes on the MissingData_Giovanni  notebook
+
+
+The distributions of the features w.r.t each class (AFclass) appear to be quite similar (at a quick look).
+
+
+MISSING VALUES:
+
+1) PCNeg has several missing values because the PCA  is performed so that (in general) there is no negative component (so PCNeg is set to NaN). However when the behavior is biphasic, this is not the case and PCNeg has a defined value
+
+2) When IPG is 1, it means that pacemaker influenced the reading. Thus, it is set to NaN any value that was influenced and was not a physiological response of the patient (otherwise values would be a measure of the pacemaker parameters).
+
+So for case 1) it could make sense either to replace the NaN with 0 or to introduce a new boolean feature to identify when PCNeg is (or is not) NaN. 
+
+-> values need to be "somehow" imputed, because by simply removing them we loose too much data.
+-> values have been imputed by computing the mean
+
+# cosidering that we have 70 features -> check how many rows have at most maxNumberOfMissingValues feature missing
+# with 10 -> we keep 1032 samples
+# notice that 53 samples have more than 40 missing values! -> MOST of the time this is due to the missing of the ECG exam (and of all its derivations)
+# REMARK -> PCneg -> has been already takan into account by setting it to zero whenever it was NaN.
+### CAN WE DROP THE ROWS THAT MISS THE ECG? 
+-> many rows miss : QRS and Pfwhm_ECG,  Why?
+
+PCA Analysis:
+ 
+the given PCA are not enough to easily (pair plot them . 2 by 2) characterize the two classes.
+by computing the first 10 PCA on the hole dataset, we can notice:
+ - the frist 2 components account for 48% of the variance 
+ - the first 5 for the 63 %
+ - from the 5th on the explained variance (of each PCA) drops below 3% 
+ - in general by pair plotting the first 10 PCA is not easy (by eyes) to distinghuish the two AF classes
+
+
+QUESTIONS 
+- how to provide the probability of having a particular disease?
+- how to deal with false positive, false negative? cost matrix? 
+- how do nowadays detect the AF class of a patient?  
+
+
